@@ -53,6 +53,25 @@ start_app.bat   # Windows
 
 Then open http://localhost:8501 in your browser.
 
+## Windows Executable (NEW)
+
+Create standalone Windows executable without requiring Python installation:
+
+- **Two architectures**: Embedded (~510 MB) or External (~150 MB + optional model)
+- **Recommended**: External architecture for flexibility
+- **One-command build**: `build_external.bat`
+
+**📖 See [BUILD_EXTERNAL_QUICKSTART.md](BUILD_EXTERNAL_QUICKSTART.md) for quick build guide.**  
+**📖 See [DEPLOYMENT_WINDOWS.md](DEPLOYMENT_WINDOWS.md) for complete deployment documentation.**
+
+Quick build:
+```cmd
+# On Windows with Python
+build_external.bat
+
+# Output: dist\TextCorrectionApp_External\TextCorrectionApp.exe
+```
+
 ## Installation
 
 ```bash
