@@ -76,6 +76,22 @@ class TestSpellChecker(unittest.TestCase):
         
         result = self.checker.analyze('')
         self.assertEqual(result['error_count'], 0)
+    
+    def test_punctuation_handling(self):
+        """Test that punctuation is handled correctly."""
+        text = "Hello, world! How are you?"
+        errors = self.checker.find_errors(text)
+        # Should not flag correct words with punctuation as errors
+        self.assertNotIn('Hello,', errors)
+        self.assertNotIn('world!', errors)
+        self.assertNotIn('you?', errors)
+        
+        # Test correction preserves punctuation
+        text_with_error = "Helo, wrld!"
+        corrected = self.checker.correct_text(text_with_error)
+        # Should have punctuation preserved
+        self.assertIn(',', corrected)
+        self.assertIn('!', corrected)
 
 
 if __name__ == '__main__':
