@@ -1,0 +1,8 @@
+# Windows Executable Deployment Requirements
+# Additional packages needed for creating Windows executables
+
+# PyInstaller for creating executables
+pyinstaller>=6.0.0
+
+# Additional dependencies for exe creation
+pywin32>=306  # Windows-specific utilities

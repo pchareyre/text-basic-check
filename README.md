@@ -30,6 +30,29 @@ Quick example:
 python inference_t5_onnx.py --text "Corrige: je vais au magazin."
 ```
 
+## Web Application (NEW)
+
+A complete web interface with FastAPI backend and Streamlit frontend for text correction:
+
+- **Upload text files** for automatic correction
+- **Two-stage pipeline**: SymSpell → T5 grammar correction
+- **Feature flag**: Enable/disable T5 correction
+- **Download corrected versions**: Intermediate and final texts
+
+**📖 See [README_API.md](README_API.md) for setup and usage.**
+
+Quick start:
+```bash
+# Install dependencies
+pip install -r requirements.txt -r requirements_api.txt -r requirements_t5_onnx.txt
+
+# Start application
+./start_app.sh  # Linux/Mac
+start_app.bat   # Windows
+```
+
+Then open http://localhost:8501 in your browser.
+
 ## Installation
 
 ```bash
