@@ -8,7 +8,7 @@ This module provides basic spell-checking functionality including:
 """
 
 import re
-from typing import List, Dict, Optional
+from typing import List, Dict, Optional, Any
 from spellchecker import SpellChecker as PySpellChecker
 
 
@@ -119,15 +119,16 @@ class SpellChecker:
         for token in text.split():
             # Extract punctuation
             match = re.match(r'^([^\w\']*)(.+?)([^\w\']*)$', token)
-            if match:
+            if match and match.group(2):  # Ensure there's a word part
                 prefix, word, suffix = match.groups()
                 corrected_word = self.correct_word(word)
                 result.append(f"{prefix}{corrected_word}{suffix}")
             else:
+                # Keep tokens that are only punctuation or whitespace as-is
                 result.append(token)
         return ' '.join(result)
     
-    def analyze(self, text: str) -> Dict[str, any]:
+    def analyze(self, text: str) -> Dict[str, Any]:
         """
         Analyze text and return detailed information about errors.
         
