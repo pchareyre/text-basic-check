@@ -1,5 +1,5 @@
 """
-Quantification script for T5-small ONNX models.
+Quantization script for T5-small ONNX models.
 This script applies dynamic INT8 quantization to the exported ONNX models.
 
 Usage:

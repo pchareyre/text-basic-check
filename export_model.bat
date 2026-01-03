@@ -34,7 +34,7 @@ if %ERRORLEVEL% EQU 0 (
     echo   - decoder_with_past_model.onnx
     echo   - tokenizer files (spiece.model, config.json, etc.^)
     echo.
-    echo Next step: Quantify the models
+    echo Next step: Quantize the models
     echo   python quantize_t5.py
 ) else (
     echo.
