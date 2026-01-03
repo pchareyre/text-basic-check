@@ -120,7 +120,7 @@ class SpellChecker:
         # Preserve original case if word starts with capital
         is_capitalized = word and word[0].isupper()
         suggestions = self._spell.lookup(word.lower(), Verbosity.TOP, max_edit_distance=2)
-        if suggestions and len(suggestions) > 0:
+        if suggestions:
             corrected = suggestions[0].term
             # Preserve capitalization
             if is_capitalized:
