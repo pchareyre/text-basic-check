@@ -1,6 +1,6 @@
 # text-basic-check
 
-A simple spell-checking and syntax correction library for Python that doesn't use generative AI. Built incrementally with PySpellChecker as the core engine.
+A simple spell-checking and syntax correction library for Python that doesn't use generative AI. Built with SymSpell for high-performance spell checking.
 
 ## Features
 
@@ -9,7 +9,8 @@ A simple spell-checking and syntax correction library for Python that doesn't us
 - ✅ Get spelling suggestions
 - ✅ Auto-correct text
 - ✅ Text analysis with detailed error information
-- 🔄 Multi-language support (via PySpellChecker)
+- ✅ High-performance spell checking with SymSpell
+- 🔄 Multi-language support (currently English, extensible)
 
 ## Installation
 
@@ -68,6 +69,14 @@ print(analysis)
 python example.py
 ```
 
+## Performance Demo
+
+To see performance metrics and comparison:
+
+```bash
+python performance_demo.py
+```
+
 ## Running Tests
 
 ```bash
@@ -100,10 +109,11 @@ text-basic-check/
 
 ### Phase 1: Basic Spell Checking ✅
 - [x] Project setup and structure
-- [x] Basic spell checker module with PySpellChecker
+- [x] Basic spell checker module with SymSpell
 - [x] Core functionality: check, find errors, suggest, correct
 - [x] Basic tests
 - [x] Simple usage example
+- [x] Performance optimizations with SymSpell
 
 ### Phase 2: Enhanced Functionality (Planned)
 - [ ] Grammar checking
@@ -113,11 +123,26 @@ text-basic-check/
 - [ ] Custom dictionaries
 
 ### Phase 3: Advanced Features (Future)
-- [ ] Performance optimizations
+- [x] Performance optimizations (SymSpell integration)
 - [ ] Batch processing
 - [ ] File format support (txt, doc, etc.)
 - [ ] Command-line interface
 - [ ] Configuration options
+
+## Performance
+
+This library now uses **SymSpell** for spell checking, which provides significant performance improvements over traditional implementations:
+
+- **Fast lookups**: O(1) average case complexity
+- **Efficient memory usage**: Optimized dictionary structure
+- **Frequency-based ranking**: More accurate suggestions
+- **Scalable**: Performance remains consistent with larger texts
+
+Run `python performance_demo.py` to see performance metrics on your system.
+
+## Why SymSpell?
+
+SymSpell is a symmetric delete spelling correction algorithm that is significantly faster than other spell checking algorithms like Norvig's or BK-trees. It achieves this by pre-generating all possible deletes within a given edit distance and storing them in a dictionary, enabling O(1) lookup times.
 
 ## License
 

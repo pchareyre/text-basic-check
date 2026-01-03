@@ -1,5 +1,5 @@
 """
-Simple spell checker module using PySpellChecker.
+Simple spell checker module using SymSpell.
 
 This module provides basic spell-checking functionality including:
 - Finding misspelled words
@@ -9,12 +9,13 @@ This module provides basic spell-checking functionality including:
 
 import re
 from typing import List, Dict, Optional, Any
-from spellchecker import SpellChecker as PySpellChecker
+from symspellpy import SymSpell, Verbosity
+import pkg_resources
 
 
 class SpellChecker:
     """
-    A simple spell checker that wraps PySpellChecker.
+    A simple spell checker that wraps SymSpell.
     
     Attributes:
         language: The language to use for spell checking (default: 'en')
@@ -28,7 +29,17 @@ class SpellChecker:
             language: The language code (e.g., 'en', 'fr', 'es')
         """
         self.language = language
-        self._spell = PySpellChecker(language=language)
+        self._spell = SymSpell(max_dictionary_edit_distance=2, prefix_length=7)
+        
+        # Load dictionary based on language
+        if language == 'en':
+            dictionary_path = pkg_resources.resource_filename(
+                "symspellpy", "frequency_dictionary_en_82_765.txt"
+            )
+            self._spell.load_dictionary(dictionary_path, term_index=0, count_index=1)
+        else:
+            # For now, only English is supported - could be extended
+            raise ValueError(f"Language '{language}' is not supported yet. Only 'en' is available.")
     
     def _tokenize(self, text: str) -> List[str]:
         """
@@ -59,7 +70,11 @@ class SpellChecker:
         Returns:
             True if the word is spelled correctly, False otherwise
         """
-        return word in self._spell
+        # SymSpell lookup returns empty list if word is correct
+        # Normalize to lowercase since dictionary is lowercase
+        suggestions = self._spell.lookup(word.lower(), Verbosity.TOP, max_edit_distance=2)
+        # If the top suggestion is the same word with distance 0, it's correct
+        return len(suggestions) > 0 and suggestions[0].term.lower() == word.lower() and suggestions[0].distance == 0
     
     def find_errors(self, text: str) -> List[str]:
         """
@@ -72,8 +87,11 @@ class SpellChecker:
             A list of misspelled words
         """
         words = self._tokenize(text)
-        misspelled = self._spell.unknown(words)
-        return list(misspelled)
+        misspelled = []
+        for word in words:
+            if not self.check_word(word):
+                misspelled.append(word)
+        return misspelled
     
     def get_suggestions(self, word: str, max_suggestions: int = 5) -> List[str]:
         """
@@ -86,10 +104,8 @@ class SpellChecker:
         Returns:
             A list of suggested corrections
         """
-        candidates = self._spell.candidates(word)
-        if candidates is None:
-            return []
-        return list(candidates)[:max_suggestions]
+        suggestions = self._spell.lookup(word.lower(), Verbosity.ALL, max_edit_distance=2)
+        return [s.term for s in suggestions[:max_suggestions]]
     
     def correct_word(self, word: str) -> str:
         """
@@ -101,8 +117,16 @@ class SpellChecker:
         Returns:
             The corrected word, or the original if no correction is found
         """
-        correction = self._spell.correction(word)
-        return correction if correction else word
+        # Preserve original case if word starts with capital
+        is_capitalized = word and word[0].isupper()
+        suggestions = self._spell.lookup(word.lower(), Verbosity.TOP, max_edit_distance=2)
+        if suggestions:
+            corrected = suggestions[0].term
+            # Preserve capitalization
+            if is_capitalized:
+                corrected = corrected.capitalize()
+            return corrected
+        return word
     
     def correct_text(self, text: str) -> str:
         """
