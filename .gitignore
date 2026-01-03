@@ -47,3 +47,9 @@ htmlcov/
 # Temporary files
 tmp/
 *.tmp
+
+# T5 ONNX Model artifacts
+onnx-t5-small/
+t5-small-onnx-q/
+wheels/
+.venv/

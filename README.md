@@ -11,6 +11,24 @@ A simple spell-checking and syntax correction library for Python that doesn't us
 - ✅ Text analysis with detailed error information
 - ✅ High-performance spell checking with SymSpell
 - 🔄 Multi-language support (currently English, extensible)
+- ⭐ **NEW**: T5-small ONNX offline text correction (grammar/syntax/style)
+
+## Advanced: T5-ONNX Text Correction
+
+For advanced grammar, syntax, and style correction, this repository now includes support for offline T5-small ONNX inference. This feature:
+
+- Works completely offline (no internet required on target machine)
+- Uses quantized INT8 ONNX models for fast CPU inference
+- Supports Windows deployment with Python scripts
+- Provides 100-400ms latency per sentence (greedy decoding)
+
+**📖 See [README_T5_ONNX.md](README_T5_ONNX.md) for complete setup and usage guide.**
+
+Quick example:
+```bash
+# After setup (see README_T5_ONNX.md)
+python inference_t5_onnx.py --text "Corrige: je vais au magazin."
+```
 
 ## Installation
 
