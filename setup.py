@@ -26,6 +26,6 @@ setup(
     ],
     python_requires=">=3.7",
     install_requires=[
-        "pyspellchecker>=0.8.0",
+        "symspellpy>=6.9.0",
     ],
 )
