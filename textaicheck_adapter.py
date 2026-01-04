@@ -1,12 +1,15 @@
 """TextAICheck Adapter - Wrapper around textaicheck.AdvancedTextChecker for LLM-based corrections."""
 import logging
-from typing import Dict, List, Optional
+from typing import TYPE_CHECKING, Dict, List, Optional
 
-from genaids_editor.core.models.tasks_definition.correction_task_definition import CorrectionLevel
-from genaids_editor.core.models.text_segment import Segment
-from genaids_editor.orthographic_check import TaskStatus, TextProcessingBatch
+if TYPE_CHECKING:
+    from genaids_editor.batch_processing_optimizer import BatchProcessingOptimizer
 
-from genaids_editor.utils.logging_config import setup_logger
+from genaids_editor.correction_task_definition import CorrectionLevel
+from genaids_editor.text_segment import Segment
+from genaids_editor.text_processing import TaskStatus, TextProcessingBatch
+
+from genaids_editor.logging_config import setup_logger
 
 logger = setup_logger(__name__)
 
@@ -70,9 +73,9 @@ class TextAICheckAdapter:
         self._checker = None
         
         # Initialize optimizer if requested
-        self.optimizer: Optional[BatchProcessingOptimizer]
+        self.optimizer: Optional["BatchProcessingOptimizer"]
         if self.use_optimizer:
-            from genaids_editor.core.adapters.batch_processing_optimizer import (
+            from genaids_editor.batch_processing_optimizer import (
                 BatchProcessingOptimizer,
             )
             
@@ -89,7 +92,7 @@ class TextAICheckAdapter:
         """Lazy-load AdvancedTextChecker to avoid import errors if textaicheck not installed."""
         if self._checker is None:
             try:
-                from textaicheck.text_checkers import AdvancedTextChecker
+                from textaicheck.textaicheck.text_checkers import AdvancedTextChecker
 
                 self._checker = AdvancedTextChecker(language=self.language, **self.llm_kwargs)
             except ImportError as e:
@@ -199,7 +202,7 @@ class TextAICheckAdapter:
 
         return batch
 
-    def _batch_to_textaicheck_format(self, batch: TextProcessingBatch) -> List[Dict]:
+    def _batch_to_textaicheck_format(self, batch: TextProcessingBatch) -> List:
         """
         Convert TextProcessingBatch to textaicheck input format.
 
@@ -218,9 +221,9 @@ class TextAICheckAdapter:
                 }
             ]
         """
-        from textaicheck.input_output_data_types import InputTextEntry
+        from textaicheck.textaicheck.input_output_data_types import InputTextEntry
 
-        textaicheck_input = []
+        textaicheck_input: List[InputTextEntry] = []
 
         for unit in batch.units:
             # Determine correction_type from unit.actions
@@ -444,7 +447,7 @@ def correct_with_textaicheck(
         - Enables batch chaining/composition
         - Consistent with adapter.correct_batch() output
     """
-    from genaids_editor.core.adapters import segments_to_batch
+    from genaids_editor.segment_batch_adapter import segments_to_batch
 
     # Filter out ORTHOGRAPH - not supported by textaicheck
     actions = _levels_to_actions(levels)
