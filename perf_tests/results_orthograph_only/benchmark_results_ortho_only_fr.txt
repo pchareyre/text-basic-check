@@ -1,0 +1,77 @@
+======================================================================
+BENCHMARK RESULTS: /home/runner/work/text-basic-check/text-basic-check/perf_tests/corpus/corpus_ortho_errors_only_fr.txt
+======================================================================
+
+CONFIGURATION
+----------------------------------------------------------------------
+Ground truth file: /home/runner/work/text-basic-check/text-basic-check/perf_tests/corpus/corpus_ortho_syntax_ground_truth_fr.txt
+Error corpus file: /home/runner/work/text-basic-check/text-basic-check/perf_tests/corpus/corpus_ortho_errors_only_fr.txt
+Spell checker:     SymSpell (text-basic-check)
+Language:          FR
+
+CORPUS STATISTICS
+----------------------------------------------------------------------
+Total sentences:          500
+Total errors in corpus:   497
+Total corrections made:   144
+
+CONFUSION MATRIX
+----------------------------------------------------------------------
+True Positives (TP):      69 (correct corrections)
+False Positives (FP):     456 (wrong corrections)
+False Negatives (FN):     353 (missed errors)
+True Negatives (TN):      2344 (correctly kept)
+
+PERFORMANCE METRICS
+----------------------------------------------------------------------
+Precision:                0.1314 (13.14%)
+  Formula: TP / (TP + FP)
+  Interpretation: Of all corrections made, what % were correct
+
+Recall:                   0.1635 (16.35%)
+  Formula: TP / (TP + FN)
+  Interpretation: Of all errors, what % were fixed correctly
+
+F1-Score:                 0.1457 (14.57%)
+  Formula: 2 * (Precision * Recall) / (Precision + Recall)
+  Interpretation: Harmonic mean of precision and recall
+
+Accuracy:                 0.7489 (74.89%)
+  Formula: (TP + TN) / (TP + TN + FP + FN)
+  Interpretation: Overall correctness of all words
+
+TIMING METRICS
+----------------------------------------------------------------------
+Initialization time:      0.004 seconds
+Total correction time:    0.040 seconds
+Average per sentence:     0.08 ms
+
+EXAMPLES
+----------------------------------------------------------------------
+
+Example 1:
+  Ground truth: Le professeur lit le livre au bureau.
+  With errors:  Le professeur lit le livre au bureeu.
+  Corrected:    Le professeur dit le lire du bureau.
+
+Example 2:
+  Ground truth: L'ingénieur rapidement optimise l'application.
+  With errors:  L'ingénieur rapidement optimise l'application.
+  Corrected:    L'ingénieur rapidement optimise l'application.
+
+Example 3:
+  Ground truth: Le photographe étudie un projet.
+  With errors:  Le photographe étudie un projet.
+  Corrected:    Le photographe étudie un projet.
+
+Example 4:
+  Ground truth: L'étudiant professionnellement invente l'article avec soin.
+  With errors:  LL'étudiant professionmellement invente l'arrticle avec soin.
+  Corrected:    LL'étudiant professionmellement invente l'arrticle avec si.
+
+Example 5:
+  Ground truth: Le professeur conduit soigneusement une recette à la maison.
+  With errors:  Le professeur condiut soigneusement une recette à la maison.
+  Corrected:    Le professeur condiut soigneusement une recette à la maison.
+
+======================================================================

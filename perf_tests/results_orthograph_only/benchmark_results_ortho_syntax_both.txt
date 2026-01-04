@@ -1,0 +1,77 @@
+======================================================================
+BENCHMARK RESULTS: /home/runner/work/text-basic-check/text-basic-check/perf_tests/corpus/corpus_ortho_syntax_errors_both.txt
+======================================================================
+
+CONFIGURATION
+----------------------------------------------------------------------
+Ground truth file: /home/runner/work/text-basic-check/text-basic-check/perf_tests/corpus/corpus_ortho_syntax_ground_truth.txt
+Error corpus file: /home/runner/work/text-basic-check/text-basic-check/perf_tests/corpus/corpus_ortho_syntax_errors_both.txt
+Spell checker:     SymSpell (text-basic-check)
+Language:          English (en)
+
+CORPUS STATISTICS
+----------------------------------------------------------------------
+Total sentences:          500
+Total errors in corpus:   2163
+Total corrections made:   614
+
+CONFUSION MATRIX
+----------------------------------------------------------------------
+True Positives (TP):      238 (correct corrections)
+False Positives (FP):     383 (wrong corrections)
+False Negatives (FN):     1549 (missed errors)
+True Negatives (TN):      1353 (correctly kept)
+
+PERFORMANCE METRICS
+----------------------------------------------------------------------
+Precision:                0.3833 (38.33%)
+  Formula: TP / (TP + FP)
+  Interpretation: Of all corrections made, what % were correct
+
+Recall:                   0.1332 (13.32%)
+  Formula: TP / (TP + FN)
+  Interpretation: Of all errors, what % were fixed correctly
+
+F1-Score:                 0.1977 (19.77%)
+  Formula: 2 * (Precision * Recall) / (Precision + Recall)
+  Interpretation: Harmonic mean of precision and recall
+
+Accuracy:                 0.4516 (45.16%)
+  Formula: (TP + TN) / (TP + TN + FP + FN)
+  Interpretation: Overall correctness of all words
+
+TIMING METRICS
+----------------------------------------------------------------------
+Initialization time:      1.674 seconds
+Total correction time:    0.028 seconds
+Average per sentence:     0.06 ms
+
+EXAMPLES
+----------------------------------------------------------------------
+
+Example 1:
+  Ground truth: The professor reads the book in the office.
+  With errors:  The professor reads the book in in the ooffice.
+  Corrected:    The professor reads the book in in the office.
+
+Example 2:
+  Ground truth: The student manages effectively a solution.
+  With errors:  The student manges effectively effectively a solution.
+  Corrected:    The student ranges effectively effectively a solution.
+
+Example 3:
+  Ground truth: The manager effectively publishes a framework during the day.
+  With errors:  maanager effectively publishes a framework during thee day.
+  Corrected:    manager effectively publishes a framework during thee day.
+
+Example 4:
+  Ground truth: The architect manages successfully a framework at night.
+  With errors:  The archittect arhcitect manages successfully a framework at nijht.
+  Corrected:    The architect architect manages successfully a framework at night.
+
+Example 5:
+  Ground truth: The teacher develops confidently the budget.
+  With errors:  hTe teacher develops develops confiently the budget.
+  Corrected:    the teacher develops develops confidently the budget.
+
+======================================================================
