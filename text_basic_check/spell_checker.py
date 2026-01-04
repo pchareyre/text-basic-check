@@ -10,7 +10,7 @@ This module provides basic spell-checking functionality including:
 import re
 from typing import List, Dict, Optional, Any
 from symspellpy import SymSpell, Verbosity
-import pkg_resources
+from importlib import resources
 
 
 class SpellChecker:
@@ -33,10 +33,12 @@ class SpellChecker:
         
         # Load dictionary based on language
         if language == 'en':
-            dictionary_path = pkg_resources.resource_filename(
-                "symspellpy", "frequency_dictionary_en_82_765.txt"
+            dict_file = resources.files("symspellpy").joinpath(
+                "frequency_dictionary_en_82_765.txt"
             )
-            self._spell.load_dictionary(dictionary_path, term_index=0, count_index=1)
+            # resources.as_file ensures we have a filesystem path for the package
+            with resources.as_file(dict_file) as dictionary_path:
+                self._spell.load_dictionary(str(dictionary_path), term_index=0, count_index=1)
         else:
             # For now, only English is supported - could be extended
             raise ValueError(f"Language '{language}' is not supported yet. Only 'en' is available.")
