@@ -26,7 +26,7 @@ class SpellChecker:
         Initialize the spell checker.
         
         Args:
-            language: The language code (e.g., 'en', 'fr', 'es')
+            language: The language code (e.g., 'en', 'fr')
         """
         self.language = language
         self._spell = SymSpell(max_dictionary_edit_distance=2, prefix_length=7)
@@ -39,9 +39,22 @@ class SpellChecker:
             # resources.as_file ensures we have a filesystem path for the package
             with resources.as_file(dict_file) as dictionary_path:
                 self._spell.load_dictionary(str(dictionary_path), term_index=0, count_index=1)
+        elif language == 'fr':
+            # Load French dictionary from local dictionaries folder
+            import os
+            dict_path = os.path.join(
+                os.path.dirname(os.path.dirname(__file__)),
+                'dictionaries',
+                'frequency_dictionary_fr_25000.txt'
+            )
+            if not os.path.exists(dict_path):
+                raise FileNotFoundError(
+                    f"French dictionary not found at: {dict_path}\n"
+                    "Please run: python create_french_dict.py"
+                )
+            self._spell.load_dictionary(dict_path, term_index=0, count_index=1)
         else:
-            # For now, only English is supported - could be extended
-            raise ValueError(f"Language '{language}' is not supported yet. Only 'en' is available.")
+            raise ValueError(f"Language '{language}' is not supported yet. Supported: 'en', 'fr'.")
     
     def _tokenize(self, text: str) -> List[str]:
         """
