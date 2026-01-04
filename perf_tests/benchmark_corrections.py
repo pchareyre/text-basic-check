@@ -9,8 +9,13 @@ This script:
 5. Writes metrics to text files
 """
 
+import os
+import sys
 import time
 from typing import List, Dict, Tuple
+
+# Add parent directory to path to import text_basic_check
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from text_basic_check import SpellChecker
 
 
@@ -258,22 +263,30 @@ def main():
     print("TEXT-BASIC-CHECK BENCHMARKING SUITE")
     print("="*70)
     
-    ground_truth_file = 'corpus_ortho_syntax_ground_truth.txt'
+    # Get directory paths
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    corpus_dir = os.path.join(script_dir, 'corpus')
+    results_dir = os.path.join(script_dir, 'results')
+    
+    # Ensure results directory exists
+    os.makedirs(results_dir, exist_ok=True)
+    
+    ground_truth_file = os.path.join(corpus_dir, 'corpus_ortho_syntax_ground_truth.txt')
     
     # Benchmark 1: Orthographic errors only
     print("\n[1/2] Benchmarking orthographic errors only...")
     metrics_ortho = benchmark_spell_checker(
         ground_truth_file,
-        'corpus_ortho_errors_only.txt',
-        'benchmark_results_ortho_only.txt'
+        os.path.join(corpus_dir, 'corpus_ortho_errors_only.txt'),
+        os.path.join(results_dir, 'benchmark_results_ortho_only.txt')
     )
     
     # Benchmark 2: Both orthographic and syntax errors
     print("\n[2/2] Benchmarking orthographic and syntax errors...")
     metrics_both = benchmark_spell_checker(
         ground_truth_file,
-        'corpus_ortho_syntax_errors_both.txt',
-        'benchmark_results_ortho_syntax_both.txt'
+        os.path.join(corpus_dir, 'corpus_ortho_syntax_errors_both.txt'),
+        os.path.join(results_dir, 'benchmark_results_ortho_syntax_both.txt')
     )
     
     # Summary comparison
@@ -290,7 +303,7 @@ def main():
     print()
     
     print("Benchmarking complete!")
-    print("\nGenerated files:")
+    print(f"\nGenerated files in {results_dir}:")
     print("  - benchmark_results_ortho_only.txt")
     print("  - benchmark_results_ortho_syntax_both.txt")
     print()

@@ -226,27 +226,36 @@ def generate_corpus(num_sentences: int = 500) -> Tuple[List[str], List[str], Lis
 
 def main():
     """Generate and save corpus files."""
+    import os
+    
     print("Generating corpus with 500 sentences...")
+    
+    # Ensure corpus directory exists
+    corpus_dir = os.path.join(os.path.dirname(__file__), 'corpus')
+    os.makedirs(corpus_dir, exist_ok=True)
     
     ground_truth, ortho_only, ortho_syntax_both = generate_corpus(500)
     
     # Save ground truth
-    with open('corpus_ortho_syntax_ground_truth.txt', 'w', encoding='utf-8') as f:
+    filepath = os.path.join(corpus_dir, 'corpus_ortho_syntax_ground_truth.txt')
+    with open(filepath, 'w', encoding='utf-8') as f:
         for sentence in ground_truth:
             f.write(sentence + '\n')
-    print(f"✓ Saved corpus_ortho_syntax_ground_truth.txt ({len(ground_truth)} sentences)")
+    print(f"✓ Saved {filepath} ({len(ground_truth)} sentences)")
     
     # Save orthographic errors only
-    with open('corpus_ortho_errors_only.txt', 'w', encoding='utf-8') as f:
+    filepath = os.path.join(corpus_dir, 'corpus_ortho_errors_only.txt')
+    with open(filepath, 'w', encoding='utf-8') as f:
         for sentence in ortho_only:
             f.write(sentence + '\n')
-    print(f"✓ Saved corpus_ortho_errors_only.txt ({len(ortho_only)} sentences)")
+    print(f"✓ Saved {filepath} ({len(ortho_only)} sentences)")
     
     # Save both types of errors
-    with open('corpus_ortho_syntax_errors_both.txt', 'w', encoding='utf-8') as f:
+    filepath = os.path.join(corpus_dir, 'corpus_ortho_syntax_errors_both.txt')
+    with open(filepath, 'w', encoding='utf-8') as f:
         for sentence in ortho_syntax_both:
             f.write(sentence + '\n')
-    print(f"✓ Saved corpus_ortho_syntax_errors_both.txt ({len(ortho_syntax_both)} sentences)")
+    print(f"✓ Saved {filepath} ({len(ortho_syntax_both)} sentences)")
     
     print("\nCorpus generation complete!")
     print("\nExample sentences:")
