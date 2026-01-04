@@ -266,7 +266,7 @@ def main():
     # Get directory paths
     script_dir = os.path.dirname(os.path.abspath(__file__))
     corpus_dir = os.path.join(script_dir, 'corpus')
-    results_dir = os.path.join(script_dir, 'results')
+    results_dir = os.path.join(script_dir, 'results_orthograph_only')
     
     # Ensure results directory exists
     os.makedirs(results_dir, exist_ok=True)

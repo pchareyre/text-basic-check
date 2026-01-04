@@ -42,7 +42,7 @@ Accuracy:                 0.4516 (45.16%)
 
 TIMING METRICS
 ----------------------------------------------------------------------
-Initialization time:      1.696 seconds
+Initialization time:      1.674 seconds
 Total correction time:    0.028 seconds
 Average per sentence:     0.06 ms
 

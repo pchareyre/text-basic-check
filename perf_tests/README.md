@@ -9,14 +9,22 @@ perf_tests/
 ├── README.md                      # This file
 ├── generate_corpus.py             # Generate test corpus with errors
 ├── benchmark_corrections.py       # Benchmark spell checker performance
-├── corpus/                        # Test corpus files
+├── corpus/                        # Test corpus files (shared across branches)
 │   ├── corpus_ortho_syntax_ground_truth.txt
 │   ├── corpus_ortho_errors_only.txt
 │   └── corpus_ortho_syntax_errors_both.txt
-└── results/                       # Benchmark results
+└── results_orthograph_only/       # Branch-specific benchmark results
     ├── benchmark_results_ortho_only.txt
     └── benchmark_results_ortho_syntax_both.txt
 ```
+
+## Branch-Specific Organization
+
+To avoid merge conflicts between branches, each branch stores results in its own subfolder:
+- `feature/orthograph-only` branch → `results_orthograph_only/` (this branch)
+- `feature/ortho-syntax-t5` branch → `results_ortho_syntax_t5/`
+
+The corpus files in `corpus/` are shared across all branches to ensure fair comparison.
 
 ## Usage
 
