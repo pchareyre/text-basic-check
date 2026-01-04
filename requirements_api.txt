@@ -1,0 +1,14 @@
+# Requirements for FastAPI backend and Streamlit frontend
+# Use these in addition to the base requirements
+
+# FastAPI backend
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+python-multipart>=0.0.6  # For file uploads
+pydantic-settings>=2.0.0  # For settings management
+
+# Streamlit frontend
+streamlit>=1.28.0
+
+# Additional utilities
+requests>=2.31.0

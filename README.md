@@ -11,6 +11,66 @@ A simple spell-checking and syntax correction library for Python that doesn't us
 - ✅ Text analysis with detailed error information
 - ✅ High-performance spell checking with SymSpell
 - 🔄 Multi-language support (currently English, extensible)
+- ⭐ **NEW**: T5-small ONNX offline text correction (grammar/syntax/style)
+
+## Advanced: T5-ONNX Text Correction
+
+For advanced grammar, syntax, and style correction, this repository now includes support for offline T5-small ONNX inference. This feature:
+
+- Works completely offline (no internet required on target machine)
+- Uses quantized INT8 ONNX models for fast CPU inference
+- Supports Windows deployment with Python scripts
+- Provides 100-400ms latency per sentence (greedy decoding)
+
+**📖 See [README_T5_ONNX.md](README_T5_ONNX.md) for complete setup and usage guide.**
+
+Quick example:
+```bash
+# After setup (see README_T5_ONNX.md)
+python inference_t5_onnx.py --text "Corrige: je vais au magazin."
+```
+
+## Web Application (NEW)
+
+A complete web interface with FastAPI backend and Streamlit frontend for text correction:
+
+- **Upload text files** for automatic correction
+- **Two-stage pipeline**: SymSpell → T5 grammar correction
+- **Feature flag**: Enable/disable T5 correction
+- **Download corrected versions**: Intermediate and final texts
+
+**📖 See [README_API.md](README_API.md) for setup and usage.**
+
+Quick start:
+```bash
+# Install dependencies
+pip install -r requirements.txt -r requirements_api.txt -r requirements_t5_onnx.txt
+
+# Start application
+./start_app.sh  # Linux/Mac
+start_app.bat   # Windows
+```
+
+Then open http://localhost:8501 in your browser.
+
+## Windows Executable (NEW)
+
+Create standalone Windows executable without requiring Python installation:
+
+- **Two architectures**: Embedded (~510 MB) or External (~150 MB + optional model)
+- **Recommended**: External architecture for flexibility
+- **One-command build**: `build_external.bat`
+
+**📖 See [BUILD_EXTERNAL_QUICKSTART.md](BUILD_EXTERNAL_QUICKSTART.md) for quick build guide.**  
+**📖 See [DEPLOYMENT_WINDOWS.md](DEPLOYMENT_WINDOWS.md) for complete deployment documentation.**
+
+Quick build:
+```cmd
+# On Windows with Python
+build_external.bat
+
+# Output: dist\TextCorrectionApp_External\TextCorrectionApp.exe
+```
 
 ## Installation
 

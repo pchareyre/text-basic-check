@@ -1,0 +1,12 @@
+# Requirements for T5-small ONNX offline text correction
+# These packages are required for the inference_t5_onnx.py script
+
+# Core dependencies
+onnxruntime>=1.16.0        # ONNX Runtime for CPU inference (quantized models)
+transformers>=4.35.0        # Hugging Face Transformers for tokenization
+optimum[onnxruntime]>=1.14.0  # Optimum for ONNX model export and loading
+sentencepiece>=0.1.99       # SentencePiece tokenizer (required for T5)
+tokenizers>=0.15.0          # Fast tokenizers
+
+# Optional: For model export and quantization (build phase only)
+# torch>=2.0.0              # PyTorch (only needed for initial export)
